@@ -1,9 +1,9 @@
 ---
 title: Ban EDGE
 date: 2022-12-20 14:00:00 +0800
-categories: []
-tags: []
-author: Lanzhi
+categories: 
+tags: 
+author: NullAqua
 math: true
 ---
 
