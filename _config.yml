@@ -20,9 +20,9 @@ timezone:
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: 蓝稚                          # the main title
+title: NullAqua's Blog                          # the main title
 
-tagline: 蓝稚的个人博客  # it will display as the sub-title
+tagline: NullAqua的个人博客  # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
   A minimal, responsive, and powerful Jekyll theme for presenting professional writing.
@@ -34,16 +34,16 @@ github:
   username: nullaqua             # change to your github username
 
 twitter:
-  username: lanzhi19467882          # change to your twitter username
+  username: nullaqua6          # change to your twitter username
 
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: 蓝稚
-  email: lan_zhi@outlook.com             # change to your email address
+  name: NullAqua
+  email: NullAqua@outlook.com             # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/username      # change to your twitter homepage
+    # - https://twitter.com/username      # change to your twitter homepage
     - https://github.com/nullaqua         # change to your github homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
@@ -82,7 +82,7 @@ theme_mode:
 img_cdn: /image/
 
 # the avatar on sidebar, support local or CORS resources
-avatar: lanzhi.png
+avatar: nullaqua.png
 
 # boolean type, the global switch for ToC in posts.
 toc: true
@@ -94,7 +94,7 @@ comments:
     shortname:    # fill with the Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
   # utterances settings › https://utteranc.es/
   utterances:
-    repo: nullaqua/lanzhi6.github.io    # <gh-username>/<repo>
+    repo: nullaqua/Blog    # <gh-username>/<repo>
     issue_term: pathname   # < url | pathname | title | ...>
   # Giscus options › https://giscus.app
   giscus:

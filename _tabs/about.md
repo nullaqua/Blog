@@ -4,7 +4,7 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-### 蓝稚的个人博客
+### NullAqua的个人博客
 
 [BluestarServer(Github)](https://github.com/BluestarServer)
 
