@@ -63,7 +63,7 @@
                     --circle-background: rgba(#{random_range(0, 255)}, #{random_range(0, 255)}, #{random_range(0, 255)}, 0.06); // 最后一个数为透明度
                     --circle-side-length: #{random_range(20px, 200px)};
                     --circle-time: #{random_range(10s, 45s)};
-                    --circle-delay: #{random_range(0s, 25s)};
+                    --circle-delay: #{random_range(-25s, 0s)};
                 }
             }
         }

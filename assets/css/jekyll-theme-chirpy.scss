@@ -13,5 +13,8 @@
 #sidebar {
     background-color: rgba(30, 30, 30, 0.5);
 }
+#tail-wrapper .footer {
+    background-color: rgba(0,0,0,0);
+}
 
 @import "animation.scss";    // 背景动画样式
