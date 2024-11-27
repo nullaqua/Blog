@@ -1,0 +1,14 @@
+-
+  icon: fa-github
+  use_icon: true
+  name: 此博客的 Github 仓库
+  link: https://github.com/nullaqua/Blog
+  # 为 true 时当且仅当图片无法加载时，使用名字替代。为 false 时始终显示名字。
+  # automatic_name: true
+# 在下面添加更多外部链接
+# -
+#   icon:
+#   use_iconfont:
+#   name:
+#   automatic_name:
+#   link:
