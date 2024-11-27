@@ -106,6 +106,24 @@ social_preview_image: # string, local or CORS resources
 # boolean type, the global switch for TOC in posts.
 toc: true
 
+panel:
+  # 设置显示在帖子中右侧边栏的内容
+  #
+  # 提示:
+  #   全局开关为 false 时必定不显示对应块。
+  #   全局开关为 true 时，可以在帖子的 md 文件头部使用形如:
+  #      lastmod: false
+  #   的方式为该帖子单独关闭右侧边栏的功能。
+  post:
+    # 最近更新
+    lastmod: true
+    # 热门标签
+    trending_tags: false
+    # 外部链接
+    external_links: true
+    # 目录
+    toc: true
+
 comments:
   # Global switch for the post-comment system. Keeping it empty means disabled.
   provider: giscus # [disqus | utterances | giscus]
