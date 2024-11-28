@@ -11,7 +11,7 @@ categories:
 math: true
 ---
 
-# # FuckBrainfuck
+# FuckBrainfuck
 ## Brainfuck简述
 若你已经知道何为Brainfuck,请跳过此部分.
 Brainfuck是一种极简单的编程语言,由Urban Müller于1993年创造。它只包含八个命令，分别是`>` `<` `+` `-` `[` `]` `.` `,`。它的内存模型是一个无限长度的字节数组,每个字节的初始值为$0$。指针指向当前字节.每个命令的含义如下：
@@ -24,11 +24,13 @@ Brainfuck是一种极简单的编程语言,由Urban Müller于1993年创造。�
 - `.`：输出当前字节的ASCII码对应的字符
 - `,`：读入一个字符，存入当前字节
 虽然该语言极其简单，但其图灵完备性已经被证明。并且由于其极简的语法，Brainfuck程序通常非常难以阅读和编写。因而得名Brainfuck.
+
 ## FuckBrainfuck
 因Brainfuck图灵完备，因此理论上我们可以设计一个高级语言，使之能够编译成Brainfuck程序。这样我们就可以用高级语言编写Brainfuck程序，而不必直接用Brainfuck语言。这就是FuckBrainfuck的目的。
 ### FuckBrainfuck语法
 使用`antlr`定义语法如下：
-```antlr
+
+```kotlin
 grammar FuckBrainfuck;  
   
 program: (functionDeclaration)* EOF;  
@@ -124,6 +126,8 @@ CHAR: '\'' (~[']) '\''; // 字符规则
 IDENT: [a-zA-Z_][a-zA-Z0-9_]*; // 标识符规则  
 WS: [ \t\r\n]+ -> skip; // 跳过空白字符
 ```
+{: file='fuckBrainfuck.g4' }
+
 ### 基本实现思路
 每次执行一个操作后，令指针回归原位。这样每个操作间就可以做到完全独立。因此我们可以将每个操作编译成一段Brainfuck代码，然后将这些代码连接起来，就得到了一个Brainfuck程序。
 ### 基本组件的实现
@@ -226,9 +230,9 @@ if (a) { trueBlock } else { falseBlock }
 var cache = 1;
 while (a)
 {
-	a = 0
-	cache = 0
-	trueBlock
+    a = 0
+    cache = 0
+    trueBlock
 }
 while (cache)
 {
@@ -258,8 +262,8 @@ fun `if`(a: Var, cache: Var, trueBlock: () -> Code, falseBlock: () -> Code): Cod
 var cache = 0
 while (a)
 {
-	++b
-	++cache
+    ++b
+    ++cache
 }
 move(cache, a)
 ```
@@ -276,7 +280,7 @@ fun copy(a: Var, b: Var, cache: Var, size: Int): Code =
 ```kotlin
 if (a) 
 {
-	ans = 1
+    ans = 1
 }
 ```
 {: file='思路' }
@@ -288,10 +292,10 @@ fun not(a: Var, res: Var, cache: Var) = `if`(a, cache, one(res), Code.empty())
 ```kotlin
 if (a)
 {
-	if (b)
-	{
-		ans = 1
-	}
+    if (b)
+    {
+        ans = 1
+    }
 }
 ```
 {: file='思路' }
@@ -304,11 +308,11 @@ fun and(a: Var, b: Var, ans: Var, cache: Var): Code =
 ```kotlin
 if (a)
 {
-	ans = 1
+    ans = 1
 }
 else if (b)
 {
-	ans = 1
+    ans = 1
 }
 ```
 {: file='思路' }
@@ -321,18 +325,18 @@ fun or(a: Var, b: Var, ans: Var, cache: Var) =
 ```kotlin
 if (a)
 {
-	if (b) {}
-	else
-	{
-		ans = 1
-	}
+    if (b) {}
+    else
+    {
+        ans = 1
+    }
 }
 else
 {
-	if (b) 
-	{
-		ans = 1
-	}
+    if (b) 
+    {
+        ans = 1
+    }
 }
 ```
 {: file='思路' }
