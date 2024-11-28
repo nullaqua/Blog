@@ -1,16 +1,37 @@
 {% if site.data.external_links.size > 0 %}
 <style>
-.external-link {
-  color: #6c757d;
+.external-links {
+  ul {
+    padding-left: 0;
+  }
+
+  li {
+    height: 1.8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    list-style: none;
+  }
+
+  a {
+    color: #6c757d;
+  }
+
+  img {
+    max-height: 60%;
+    margin: auto;
+  }
 }
 </style>
-<section xmlns>
+<section xmlns class="external-links">
   <h2 class="panel-heading">{{- site.data.locales[lang].panel.external_links | default: 'External Links' -}}</h2>
   <ul class="post-content pl-0 pb-1 ml-1 mt-2">
 
 
     {% for external_link in site.data.external_links %}
-    <li><a href="{{ external_link.link }}" class="external-link">
+    <li><a href="{{ external_link.link }}">
       {% if external_link.automatic_name %}
       {% if external_link.use_icon %}
       <i class="fab {{ external_link.icon }}"></i>
