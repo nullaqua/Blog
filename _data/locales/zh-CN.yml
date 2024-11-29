@@ -32,14 +32,15 @@ panel:
 copyright:
   # 显示在文章底部
   license:
-    template: 本文由作者按照 :LICENSE_NAME 进行授权
-    name: CC BY 4.0
-    link: https://creativecommons.org/licenses/by/4.0/
+    template: 本文由作者按照 :LICENSE_NAME 进行授权, 未经许可不得转载。
+    name: CC BY-NC 4.0
+    link: https://creativecommons.org/licenses/by-nc/4.0/
 
   # 显示在页脚
   brief: 保留部分权利。
   verbose: >-
-    除非另有说明，本网站上的博客文章均由作者按照知识共享署名 4.0 国际 (CC BY 4.0) 许可协议进行授权。
+    除非另有说明，本网站上的博客文章均由作者按照署名-非商业性使用 4.0 国际 (CC BY-NC 4.0) 许可协议进行授权。
+    未经许可不得转载。
 
 meta: 本站采用 :PLATFORM 主题 :THEME
 
@@ -68,18 +69,20 @@ post:
     previous: 上一篇
     copy_code:
       succeed: 已复制！
+    run:
+      output: 运行结果
+      wait: 等待运行结果。。。
+      error_prompt: "运行失败，错误："
     share_link:
       title: 分享链接
       succeed: 链接已复制！
-  # pinned prompt of posts list on homepage
-  pin_prompt: 顶置
 
-# Date time format.
-# See: <http://strftime.net/>, <https://day.js.org/docs/en/display/format>
+# 日期格式
+# 参见: <http://strftime.net/>, <https://day.js.org/docs/en/display/format>
 df:
   post:
-    strftime: '%Y/%m/%d'
-    dayjs: 'YYYY/MM/DD'
+    strftime: "%Y/%m/%d"
+    dayjs: "YYYY/MM/DD"
 
 # 分类页面
 categories:

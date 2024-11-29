@@ -255,6 +255,9 @@ fun `if`(a: Var, cache: Var, trueBlock: Code, falseBlock: Code): Code =
     runOn(cache, ']'.asCode())  
 fun `if`(a: Var, cache: Var, trueBlock: () -> Code, falseBlock: () -> Code): Code =  
     `if`(a, cache, trueBlock(), falseBlock())
+fun ifWithCopy(a: Var, cache1: Var, cache2: Var, trueBlock: Code, falseBlock: Code): Code =  
+    copy(a, cache1, cache2) +  
+    `if`(cache1, cache2, trueBlock, falseBlock)
 ```
 #### copy
 大概思路是这样的：
@@ -278,14 +281,15 @@ fun copy(a: Var, b: Var, cache: Var, size: Int): Code =
 ```
 #### not
 ```kotlin
-if (a) 
+if (a) {}
+else 
 {
-    ans = 1
+    ++ans
 }
 ```
 {: file='思路' }
 ```kotlin
-fun not(a: Var, res: Var, cache: Var) = `if`(a, cache, one(res), Code.empty())
+fun not(a: Var, res: Var, cache: Var) = `if`(a, cache, Code.empty(), inc(res))
 ```
 {: file='实现' }
 #### and
@@ -348,7 +352,166 @@ fun xor(a: Var, b: Var, ans: Var, cache: Var): Code =
     )
 ```
 {: file='实现' }
+#### add/sub
+上面已经实现了`move`，观察发现，其实`move`就相当于实现了`b+=a`，只不过会清空`a`。因此`a+=b`就是`move(b, a)`。
+而`a-=b`只需要把`move`中的`inc`改为`dec`即可。
+```kotlin
+fun addAssign(a: Var, b: Var): Code = move(b, a)  
+fun subAssign(a: Var, b: Var): Code =  
+    if (a == b) Code.empty() else `while` (a, dec(a) + dec(b))  
+// 加减常数
+fun addAssign(a: Var, value: UByte): Code =  
+    runOn(a, "+".repeat(value.toInt()).asCode())  
+fun subAssign(a: Var, value: UByte): Code =  
+    runOn(a, "-".repeat(value.toInt()).asCode())
+```
+#### equal/notEqual
+其实就是`a-b`，然后判断`a`是否为$0$。若为$0$则`ans`为$1$，否则为$0$。
+因此这里不赘述了。
+#### less/greater
+将`b`逐渐减为$0$，期间若出现`a`为$0$，则说明`a<b`
+```kotlin
+var ans = 0
+var cache = 0
+while (b)
+{
+	--b
+	if (a) --a
+	else
+	{
+		++ans
+		b = 0
+	}
+}
+```
+{: file='思路' }
+```kotlin
+fun less(a: Var, b: Var, ans: Var, cache1: Var, cache2: Var): Code =  
+    `while`(b)  
+    {  
+        dec(b) +  
+        ifWithCopy(  
+            a,  
+            cache1,  
+            cache2,  
+            dec(a),  
+            inc(ans) +  
+            zero(b),  
+        )  
+    } +  
+    zero(a)  
+  
+fun greater(a: Var, b: Var, ans: Var, cache1: Var, cache2: Var): Code =  
+    less(b, a, ans, cache1, cache2)
+```
+{: file='实现' }
+#### lessEqual/greaterEqual
+只需要在上面的基础上在`while`后判断若`a`为$0$则说明`a==b`答案也为$1$
+```kotlin
+var ans = 0
+var cache = 0
+while (b)
+{
+	--b
+	cache = a
+	// 因为if会导致b被清空，所以先复制
+	if (cache) --a
+	else
+	{
+		++ans
+		b = 0
+	}
+}
+// if的同时a也被清空，不需要再次清空
+if (a) {}
+else ++ans
+```
+{: file = '思路' }
+```kotlin
+fun lessEqual(a: Var, b: Var, ans: Var, cache1: Var, cache2: Var): Code =  
+    `while`(b)  
+    {  
+        dec(b) +  
+        copy(a, cache1, cache2) +  
+        `if`(  
+            cache1,  
+            cache2,  
+            dec(a),  
+            inc(ans) +  
+            zero(b),  
+        )  
+    } +  
+    `if`(a, cache1, Code.empty(), inc(ans))  
+  
+fun greaterEqual(a: Var, b: Var, ans: Var, cache1: Var, cache2: Var): Code =  
+    lessEqual(b, a, ans, cache1, cache2)
+```
+{: file='实现' }
+#### mul
+```kotlin
+var cache = 0
+move(a, cache)
+while (cache)
+{
+    --cache
+    copy(b, a)
+}
+```
+{: file='思路' }
+```kotlin
+fun mulAssign(a: Var, b: Var, cache: Var, cache2: Var): Code =  
+    move(a, cache) +  
+    `while`(cache)  
+    {  
+        copy(b, a, cache2) +  
+        dec(cache)  
+    } +  
+    zero(b) +  
+    zero(cache2)
+```
+{: file='实现' }
+#### div
+不停的给`a`减去`b`，并给答案加一，直到某次在减的过程中`a`为$0$了，结束。
+内层的`while`循环相当于`a-=b`的同时进行了判断了`cahce`是否大于`b`，比较结果存在了`cahce3`中。
+```kotlin
+var cache = 0
+move(a, cache)
+while (cache)
+{
+	var cache1 = b
+	while (cache1)
+	{
+		if (cache) {}
+		else ++cache3
+		--cache1
+		--cache
+	}
+	if (cache3) cache = 0
+	else ++a
+}
+```
+{: file='思路' }
+```kotlin
+fun divAssign(a: Var, b: Var, cache: Var): Code =  
+    move(a, cache) +  
+    `while`(cache)  
+    {  
+        copy(b, cache + 1, cache + 2) +  
+        `while`(cache + 1)  
+        {  
+            ifWithCopy(cache, cache + 4, cache + 2, Code.empty(), inc(cache + 3) + zero(cache + 1)) +  
+            dec(cache + 1) +  
+            dec(cache)  
+        } +  
+        `if`(cache + 3, cache + 2, zero(cache), inc(a))  
+    } +  
+    zero(b) +  
+    zero(cache, 5)
+```
+{: file='实现' }
 
-<div class = "box-info">
-未完待续
-</div>
+> 因为所需`cache`过多，所以传一个基准位置，相当于占用了基准位置开始的5个字节。
+{: prompt-info }
+### 函数调用栈
+> 别急还没写完呢^v^
+{: prompt-warning }

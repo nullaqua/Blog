@@ -11,6 +11,7 @@ layout:
 tabs:
   # format: <filename_without_extension>: <value>
   home: Home
+  subdomain: Subdomain
   categories: Categories
   tags: Tags
   archives: Archives
@@ -25,22 +26,25 @@ search:
 panel:
   lastmod: Recently Updated
   trending_tags: Trending Tags
+  external_links: External Links
   toc: Contents
 
 copyright:
   # Shown at the bottom of the post
   license:
-    template: This post is licensed under :LICENSE_NAME by the author.
-    name: CC BY 4.0
-    link: https://creativecommons.org/licenses/by/4.0/
+    # 本文由作者按照 :LICENSE_NAME 进行授权, 未经许可不得转载。
+    template: This post is licensed under :LICENSE_NAME by the author, no reproduction without permission.
+    name: CC BY-NC 4.0
+    link: https://creativecommons.org/licenses/by-nc/4.0/
 
   # Displayed in the footer
   brief: Some rights reserved.
   verbose: >-
     Except where otherwise noted, the blog posts on this site are licensed
-    under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.
+    under the Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) license by the author.
+    No reproduction without permission.
 
-meta: Powered by :PLATFORM with :THEME theme.
+meta: Using the :THEME theme for :PLATFORM.
 
 not_found:
   statment: Sorry, we've misplaced that URL or it's pointing to something that doesn't exist.
@@ -67,21 +71,23 @@ post:
     previous: Older
     copy_code:
       succeed: Copied!
+    run:
+      output: Code output
+      wait: Wait for running...
+      error_prompt: "Failed to run code, message:"
     share_link:
       title: Copy link
       succeed: Link copied successfully!
-  # pinned prompt of posts list on homepage
-  pin_prompt: Pinned
 
 # Date time format.
 # See: <http://strftime.net/>, <https://day.js.org/docs/en/display/format>
 df:
   post:
-    strftime: '%b %e, %Y'
-    dayjs: 'll'
+    strftime: "%b %e, %Y"
+    dayjs: "ll"
   archives:
-    strftime: '%b'
-    dayjs: 'MMM'
+    strftime: "%b"
+    dayjs: "MMM"
 
 # categories page
 categories:
