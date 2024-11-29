@@ -12,6 +12,10 @@ math: true
 ---
 
 # FuckBrainfuck
+<div class="box-warning">
+<div class="title"> 先叠甲 </div>
+以下内容纯属娱乐，不具有任何实际意义。我无法保证我的实现没有问题，如有问题欢迎指出。
+</div>
 ## Brainfuck简述
 若你已经知道何为Brainfuck,请跳过此部分.
 Brainfuck是一种极简单的编程语言,由Urban Müller于1993年创造。它只包含八个命令，分别是`>` `<` `+` `-` `[` `]` `.` `,`。它的内存模型是一个无限长度的字节数组,每个字节的初始值为$0$。指针指向当前字节.每个命令的含义如下：
