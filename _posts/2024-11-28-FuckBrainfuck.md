@@ -358,7 +358,7 @@ fun xor(a: Var, b: Var, ans: Var, cache: Var): Code =
 ```kotlin
 fun addAssign(a: Var, b: Var): Code = move(b, a)  
 fun subAssign(a: Var, b: Var): Code =  
-    if (a == b) Code.empty() else `while` (a, dec(a) + dec(b))  
+    if (a == b) Code.empty() else `while` (b, dec(a) + dec(b))  
 // 加减常数
 fun addAssign(a: Var, value: UByte): Code =  
     runOn(a, "+".repeat(value.toInt()).asCode())  
@@ -375,13 +375,13 @@ var ans = 0
 var cache = 0
 while (b)
 {
-	--b
-	if (a) --a
-	else
-	{
-		++ans
-		b = 0
-	}
+    --b
+    if (a) --a
+    else
+    {
+        ++ans
+        b = 0
+    }
 }
 ```
 {: file='思路' }
@@ -412,15 +412,15 @@ var ans = 0
 var cache = 0
 while (b)
 {
-	--b
-	cache = a
-	// 因为if会导致b被清空，所以先复制
-	if (cache) --a
-	else
-	{
-		++ans
-		b = 0
-	}
+    --b
+    cache = a
+    // 因为if会导致b被清空，所以先复制
+    if (cache) --a
+    else
+    {
+        ++ans
+        b = 0
+    }
 }
 // if的同时a也被清空，不需要再次清空
 if (a) {}
@@ -478,16 +478,16 @@ var cache = 0
 move(a, cache)
 while (cache)
 {
-	var cache1 = b
-	while (cache1)
-	{
-		if (cache) {}
-		else ++cache3
-		--cache1
-		--cache
-	}
-	if (cache3) cache = 0
-	else ++a
+    var cache1 = b
+    while (cache1)
+    {
+        if (cache) {}
+        else ++cache3
+        --cache1
+        --cache
+    }
+    if (cache3) cache = 0
+    else ++a
 }
 ```
 {: file='思路' }
@@ -511,7 +511,7 @@ fun divAssign(a: Var, b: Var, cache: Var): Code =
 {: file='实现' }
 
 > 因为所需`cache`过多，所以传一个基准位置，相当于占用了基准位置开始的5个字节。
-{: prompt-info }
+{: .prompt-info }
 ### 函数调用栈
 > 别急还没写完呢^v^
-{: prompt-warning }
+{: .prompt-warning }
